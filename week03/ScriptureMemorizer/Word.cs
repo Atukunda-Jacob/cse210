@@ -28,12 +28,7 @@ public class Word
     {
         if (_isHidden)
         {
-            string hidden = "";
-            foreach (char c in _text)
-            {
-                hidden += "_";
-            }
-            return hidden;
+            return new string('_', _text.Length);
         }
         else
         {
