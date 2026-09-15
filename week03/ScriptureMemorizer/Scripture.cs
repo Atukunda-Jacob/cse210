@@ -1,16 +1,14 @@
-using System;
-using System.Collections.Generic;
-
 public class Scripture
 {
     private Reference _reference;
-    private List<Word> _words = new List<Word>();
+    private List<Word> _words;
 
     public Scripture(Reference reference, string text)
     {
         _reference = reference;
-        string[] words = text.Split(' ');
-        foreach (string w in words)
+        _words = new List<Word>();
+        string[] splitWords = text.Split(' ');
+        foreach (string w in splitWords)
         {
             _words.Add(new Word(w));
         }
@@ -18,32 +16,24 @@ public class Scripture
 
     public void HideRandomWords(int numberToHide)
     {
-        Random random = new Random();
-        int count = 0;
-        // Make sure we don't try to hide more than available visible words
-        int visibleCount = 0;
-        foreach (Word w in _words)
+        Random rand = new Random();
+        int hiddenCount = 0;
+        while (hiddenCount < numberToHide)
         {
-            if (!w.IsHidden()) visibleCount++;
-        }
-        if (visibleCount == 0) return;
-
-        int toHide = Math.Min(numberToHide, visibleCount);
-
-        while (count < toHide)
-        {
-            int index = random.Next(_words.Count);
+            int index = rand.Next(_words.Count);
             if (!_words[index].IsHidden())
             {
                 _words[index].Hide();
-                count++;
+                hiddenCount++;
             }
+            if (IsCompletelyHidden())
+                break;
         }
     }
 
     public string GetDisplayText()
     {
-        string display = _reference.GetDisplayText() + " ";
+        string display = _reference.GetDisplayText() + " - ";
         foreach (Word w in _words)
         {
             display += w.GetDisplayText() + " ";
@@ -56,9 +46,7 @@ public class Scripture
         foreach (Word w in _words)
         {
             if (!w.IsHidden())
-            {
                 return false;
-            }
         }
         return true;
     }
