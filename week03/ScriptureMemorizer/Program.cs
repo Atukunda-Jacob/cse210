@@ -1,3 +1,5 @@
+using System;
+
 class Program
 {
     static void Main(string[] args)
@@ -9,11 +11,14 @@ class Program
         {
             Console.Clear();
             Console.WriteLine(scripture.GetDisplayText());
-            Console.WriteLine("\nPress Enter to hide words or type 'quit' to exit.");
-            string input = Console.ReadLine();
-            if (input.ToLower() == "quit") break;
+            Console.WriteLine();
+            Console.WriteLine("Press enter to continue or type 'quit' to finish:");
 
-            if (scripture.IsCompletelyHidden()) break;
+            string input = Console.ReadLine();
+            if (input.ToLower() == "quit" || scripture.IsCompletelyHidden())
+            {
+                break;
+            }
 
             scripture.HideRandomWords(3);
         }
