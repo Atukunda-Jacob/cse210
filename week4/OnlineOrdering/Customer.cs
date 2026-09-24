@@ -19,8 +19,8 @@ public class Customer
         return _name;
     }
 
-    public string GetAddress()
+    public Address GetAddress()
     {
-        return _address.GetFullAddress();
+        return _address;
     }
 }
