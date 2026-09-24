@@ -18,13 +18,10 @@ public class Product
         return _price * _quantity;
     }
 
-    public string GetName()
+    public string GetPackingLabel()
     {
-        return _name;
+        return $"{_name} ({_productId})";
     }
 
-    public string GetProductId()
-    {
-        return _productId;
-    }
+    public string Name { get { return _name; } }
 }
