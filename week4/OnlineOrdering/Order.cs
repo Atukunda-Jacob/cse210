@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Text;
 
 public class Order
 {
@@ -17,30 +16,29 @@ public class Order
         _products.Add(product);
     }
 
-    public double GetTotalPrice()
+    public double GetTotalCost()
     {
         double total = 0;
-        foreach (Product product in _products)
+        foreach (var product in _products)
         {
             total += product.GetTotalCost();
         }
-        total += _customer.IsInUSA() ? 5 : 35;
-        return total;
+        double shipping = _customer.IsInUSA() ? 5 : 35;
+        return total + shipping;
     }
 
     public string GetPackingLabel()
     {
-        StringBuilder label = new StringBuilder();
-        label.AppendLine("Packing Label:");
-        foreach (Product product in _products)
+        string label = "Packing Label:\n";
+        foreach (var product in _products)
         {
-            label.AppendLine($"{product.GetName()} - {product.GetProductId()}");
+            label += $"{product.GetPackingLabel()}\n";
         }
-        return label.ToString();
+        return label;
     }
 
     public string GetShippingLabel()
     {
-        return $"Shipping Label:\n{_customer.GetName()}\n{_customer.GetAddress()}";
+        return $"Shipping Label:\n{_customer.GetName()}\n{_customer.GetAddress().GetFullAddress()}";
     }
-} 
+}
